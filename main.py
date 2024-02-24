@@ -2,17 +2,49 @@ import discord
 from discord.ext import commands
 import random
 import os
+from threading import Thread
+from flask import Flask
 
+app = Flask(__name__)
+bot_process = None
+
+def run():
+    app.run(host='0.0.0.0', port=8091)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+
+def start_bot():
+    global bot_process
+    if bot_process is None:
+        bot_process = os.system('python3 main.py &')
+        keep_alive()
+
+def stop_bot():
+    global bot_process
+    if bot_process is not None:
+        os.system('pkill -f main.py')
+        bot_process = None
+        # Restart the bot after stopping it
+        start_bot()
+
+# Move start_bot() to the end, after bot setup
+# Access the bot token from the environment variable
 bot_token = os.environ.get('BOT_TOKEN')
+
+# Create the bot instance
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.command()
 async def boton(ctx):
+    start_bot()
     await ctx.send("Bot is now running!")
 
 @bot.command()
 async def botoff(ctx):
+    stop_bot()
     await ctx.send("Bot is now stopped!")
 
 if not bot_token:
@@ -65,4 +97,5 @@ else:
         # Process commands
         await bot.process_commands(message)
 
+# Run the bot
 bot.run(bot_token)
