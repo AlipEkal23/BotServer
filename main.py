@@ -42,7 +42,8 @@ else:
     async def on_ready():
         print(f'Logged in as {bot.user.name}')
 
-  @bot.event
+
+    @bot.event
 async def on_message(message):
     # Ignore messages sent by the bot itself
     if message.author == bot.user:
@@ -64,5 +65,7 @@ async def on_message(message):
 
     # Process commands
     await bot.process_commands(message)
+
+     
 
     bot.run(bot_token)
