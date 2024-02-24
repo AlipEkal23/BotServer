@@ -9,7 +9,7 @@ app = Flask(__name__)
 bot_process = None
 
 def run():
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8090)
 
 def keep_alive():
     t = Thread(target=run)
