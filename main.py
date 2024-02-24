@@ -2,6 +2,11 @@ import discord
 from discord.ext import commands
 import random
 import os
+from threading import Thread
+from flask import Flask
+
+app = Flask(__name__)
+bot_process = None
 
 def run():
     app.run(host='0.0.0.0', port=8080)
@@ -24,14 +29,14 @@ def stop_bot():
         # Restart the bot after stopping it
         start_bot()
 
-start_bot()  
+start_bot()
 
 # Access the bot token from the environment variable
 bot_token = os.environ.get('BOT_TOKEN')
 
 # Create the bot instance
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix='!', intents=intents )
+bot = commands.Bot(command_prefix='!', intents=intents)
                    
 @bot.command()
 async def boton(ctx):
