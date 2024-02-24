@@ -1,3 +1,4 @@
+FROM docker:20
 FROM ubuntu:latest
 
 # Install Docker
