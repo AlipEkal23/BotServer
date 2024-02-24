@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import random
 import os
-from keep_alive import start_bot, stop_bot
+from main import start_bot, stop_bot
 
 start_bot()  
 
