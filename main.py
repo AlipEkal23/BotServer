@@ -4,6 +4,7 @@ import random
 import os
 from threading import Thread
 from flask import Flask
+import asyncio  # Added asyncio import
 
 app = Flask(__name__)
 bot_process = None
@@ -96,6 +97,11 @@ else:
 
         # Process commands
         await bot.process_commands(message)
+
+        # Introduce a delay if the bot is rate-limited
+        while bot.is_ws_ratelimited():
+            await asyncio.sleep(1)  # You can adjust the sleep duration as needed
+            print("Rate limited, waiting...")
 
 # Run the bot
 bot.run(bot_token)
