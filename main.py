@@ -42,17 +42,27 @@ else:
     async def on_ready():
         print(f'Logged in as {bot.user.name}')
 
-    @bot.event
-    async def on_message(message):
-        if message.author == bot.user:
-            return
-        if bot.user.mention in message.content:
-            if message.author.id == 690982140522790912:
-                await message.channel.send(f"{message.author.mention} halo owner ganteng.")
-            else:
-                await message.channel.send(f"{message.author.mention} halo ayam, orang yang ayam jangan tag gue.")
-        if "alip" in message.content.lower():
-            await message.channel.send("alip lagi tururururu , jangan tag or call")
-        await bot.process_commands(message)
+  @bot.event
+async def on_message(message):
+    # Ignore messages sent by the bot itself
+    if message.author == bot.user:
+        return
+
+    # Check if the message mentions the bot
+    if bot.user.mention in message.content:
+        # Check if the author is the bot owner
+        if message.author.id == 690982140522790912:  # Replace with your own user ID
+            # Respond with a special message for the bot owner
+            await message.channel.send(f"{message.author.mention} halo owner ganteng.")
+        else:
+            # Respond with a message for other users mentioning the bot
+            await message.channel.send(f"{message.author.mention} halo ayam, orang yang ayam jangan tag gue.")
+
+    # Check if the message contains "alip"
+    if "alip" in message.content.lower():
+        await message.channel.send("alip lagi tururururu , jangan tag or call")
+
+    # Process commands
+    await bot.process_commands(message)
 
     bot.run(bot_token)
