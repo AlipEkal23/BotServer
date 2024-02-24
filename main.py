@@ -4,13 +4,13 @@ import random
 import os
 from threading import Thread
 from flask import Flask
-import asyncio  # Added asyncio import
+import asyncio
 
 app = Flask(__name__)
 bot_process = None
 
 def run():
-    app.run(host='0.0.0.0', port=8092)
+    app.run(host='0.0.0.0', port=3000)  # Corrected port number
 
 def keep_alive():
     t = Thread(target=run)
