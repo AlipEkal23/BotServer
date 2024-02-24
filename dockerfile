@@ -1,14 +1,17 @@
-FROM docker:20
-FROM ubuntu:latest
+FROM docker:20-dind
 
-# Install Docker
-RUN apt-get update && \
-    apt-get install -y docker.io
+# Install additional dependencies
+RUN apk add --no-cache python3 python3-dev py3-pip build-base
 
-# Rest of your Dockerfile
+# Set the working directory
 WORKDIR /app
+
+# Copy requirements and install dependencies
 COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
+
+# Copy the rest of the application code
 COPY . .
 
-CMD ["python", "main.py"]
+# Command to run your application
+CMD ["python3", "your_bot_script.py"]
